@@ -7,9 +7,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Main {
-	public static final String caminhoDoArquivo = "../src/main/resources/data.csv";
+	public static final String caminhoDoArquivo = "src/main/resources/data.csv";
+	ProcessaArquivo processaArquivo = new ProcessaArquivo();
 
-	List<Jogador> listaJogadores = ProcessaArquivo.retornaListaRegistros(caminhoDoArquivo);
+	List<Jogador> listaJogadores = processaArquivo.retornaListaRegistros(caminhoDoArquivo);
 
 	// Quantas nacionalidades (coluna `nationality`) diferentes existem no arquivo?
 	public int q1() {

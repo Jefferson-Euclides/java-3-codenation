@@ -1,26 +1,26 @@
 package challenge;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ProcessaArquivo {
 	
-	@SuppressWarnings("resource")
-	public static List<Jogador> retornaListaRegistros(String caminhoDoArquivo) {
+	public List<Jogador> retornaListaRegistros(String caminhoDoArquivo) {
+
+		List<Jogador> result = new ArrayList<>();
 		Jogador jogador = new Jogador();
-		
-		try {
-			List<Jogador> listaRegistros = new ArrayList<>();
-			String arquivoCSV = new File(caminhoDoArquivo).getCanonicalPath();
-			BufferedReader br = new BufferedReader(new FileReader(arquivoCSV));
-			String linha;
-			
-			while ((linha = br.readLine()) != null) {	
-				String registro[] = linha.split(",");
+
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource(caminhoDoArquivo).getFile());
+
+		try (Scanner scanner = new Scanner(file)) {
+
+			while (scanner.hasNextLine()) {
+				String line = scanner.nextLine();
+				String registro[] = line.split(",");
 				
 				jogador.setFull_name(registro[2]);
 				jogador.setClub(registro[3]);
@@ -30,12 +30,16 @@ public class ProcessaArquivo {
 				jogador.setEur_wage(registro[17]);
 				jogador.setEur_release_clause(registro[18]);
 				
-				listaRegistros.add(jogador);
+				result.add(jogador);
 			}
-			return listaRegistros;
-		}catch(IOException e) {
-			e.getMessage();
-			return null;
+
+			scanner.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-	}
+			
+		return result;
+
+	  }
 }
