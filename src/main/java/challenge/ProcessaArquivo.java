@@ -32,9 +32,7 @@ public class ProcessaArquivo {
 				
 				result.add(jogador);
 			}
-
-			scanner.close();
-
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
